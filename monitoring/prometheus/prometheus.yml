@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['api-gateway:3000']
+  - job_name: 'log-service'
+    static_configs:
+      - targets: ['log-service:3001']
+  - job_name: 'action-service'
+    static_configs:
+      - targets: ['action-service:3005']

@@ -1,0 +1,49 @@
+{
+  "name": "ai-log-analyzer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "nest build",
+    "prisma:generate": "prisma generate --schema libs/database/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema libs/database/prisma/schema.prisma",
+    "studio": "npx prisma studio --schema libs/database/prisma/schema.prisma",
+    "start:all": "concurrently \"npm run start:api\" \"npm run start:websocket\" \"npm run start:log\" \"npm run start:anomaly\" \"npm run start:ticket\" \"npm run start:ai\" \"npm run start:action\"",
+    "start:api": "nest start api-gateway --watch",
+    "start:websocket": "nest start websocket-gateway --watch",
+    "start:log": "nest start log-service --watch",
+    "start:anomaly": "nest start anomaly-service --watch",
+    "start:ticket": "nest start ticket-service --watch",
+    "start:ai": "nest start ai-service --watch",
+    "start:action": "nest start action-service --watch",
+    "dashboard": "npx -y serve apps/dashboard"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.6",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^11.1.6",
+    "@nestjs/platform-express": "^11.1.6",
+    "@nestjs/platform-socket.io": "^11.1.6",
+    "@nestjs/throttler": "^6.4.1",
+    "@nestjs/websockets": "^11.1.6",
+    "@prisma/client": "^6.6.0",
+    "ai": "^6.0.141",
+    "ai-sdk-ollama": "^3.8.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "kafkajs": "^2.2.4",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "socket.io": "^4.8.1",
+    "ssh2": "^1.16.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.7",
+    "@types/node": "^22.14.0",
+    "@types/ssh2": "^1.15.5",
+    "concurrently": "^9.2.1",
+    "prisma": "^6.6.0",
+    "typescript": "^5.8.3"
+  }
+}

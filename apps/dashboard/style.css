@@ -1,0 +1,223 @@
+:root {
+    --bg-dark: #0d0d0e;
+    --panel-bg: rgba(255, 255, 255, 0.03);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #e0e0e0;
+    --text-secondary: #909090;
+    --neon-cyan: #00f0ff;
+    --neon-amber: #ffb700;
+    --neon-red: #ff003c;
+    --neon-green: #39ff14;
+    --primary-font: 'Outfit', sans-serif;
+    --mono-font: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--primary-font);
+    overflow-y: auto;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    background: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 20px 0;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.neon-text {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(57, 255, 20, 0.1);
+    color: var(--neon-green);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-left: 15px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--neon-green);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+}
+
+.topology-panel {
+    grid-column: span 3;
+    height: 300px;
+    position: relative;
+}
+
+.canvas-container {
+    flex: 1;
+    position: relative;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.03) 0%, transparent 70%);
+}
+
+#topology-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Voice Toggle */
+.voice-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-right: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #333;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px; width: 14px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background-color: var(--neon-cyan); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* Terminal Styling */
+.terminal-panel {
+    margin: 20px;
+    background: #000;
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    animation: slideUp 0.4s ease-out;
+}
+
+.terminal-header {
+    background: #1a1a1a;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #888;
+    border-bottom: 1px solid #333;
+}
+
+.terminal-status { color: var(--neon-green); font-weight: bold; }
+
+.terminal-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    color: var(--neon-green);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.terminal-line { margin-bottom: 4px; }
+
+/* AI Brain Confidence Meter */
+.ai-brain-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 20px var(--neon-cyan));
+    transition: all 0.5s;
+}
+
+.brain-thinking {
+    animation: brainPulse 1s infinite alternate;
+}
+
+@keyframes brainPulse {
+    from { transform: scale(1); filter: drop-shadow(0 0 10px var(--neon-cyan)); }
+    to { transform: scale(1.1); filter: drop-shadow(0 0 30px var(--neon-cyan)); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Approve Button */
+.btn-approve {
+    background: var(--neon-cyan);
+    color: #000;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.btn-approve:hover {
+    box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+.confidence-meter {
+    font-size: 0.8rem;
+    color: var(--neon-cyan);
+    margin-top: 10px;
+    font-weight: bold;
+}
+

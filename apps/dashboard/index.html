@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Log Analyzer | Monitoring Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="neon-text">AI</span> Log Analyzer
+                <div class="status-badge">
+                    <span class="status-dot"></span> System Live
+                </div>
+            </div>
+            <div class="controls-top">
+                <div class="voice-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="voice-enable">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>AI Voice Alerts</span>
+                </div>
+                <button onclick="simulateCrash()" class="btn btn-danger">Simulate Crash</button>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Topology Map (New Panel) -->
+            <section class="panel glass topology-panel">
+                <div class="panel-header">
+                    <h2>Service Topology Map</h2>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="topology-canvas"></canvas>
+                </div>
+            </section>
+
+            <!-- Section 1: Live Logs -->
+            <section class="panel glass log-panel">
+                <div class="panel-header">
+                    <h2>Live System Logs</h2>
+                    <span class="badge logs-count">0</span>
+                </div>
+                <div id="logs-container" class="scroll-area mono"></div>
+            </section>
+
+            <!-- Section 2: Active Incidents -->
+            <div class="right-column">
+                <section class="panel glass anomalies-panel">
+                    <div class="panel-header">
+                        <h2>Anomalies detected</h2>
+                    </div>
+                    <div id="anomalies-container" class="incident-stack">
+                        <div class="empty-state">No anomalies detected</div>
+                    </div>
+                </section>
+
+                <section class="panel glass tickets-panel">
+                    <div class="panel-header">
+                        <h2>Open Tickets</h2>
+                    </div>
+                    <div id="tickets-container" class="incident-stack">
+                        <div class="empty-state">System healthy</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Section 3: AI Insights -->
+            <section class="panel glass ai-insight-panel">
+                <div class="panel-header">
+                    <h2>AI Diagnosis & Resolution</h2>
+                    <div id="latest-ticket-id" class="ticket-id-tag">--</div>
+                </div>
+                <div id="ai-resolution-content" class="resolution-container">
+                    <div class="empty-state-large">
+                        <div class="ai-brain-icon" id="ai-brain">🧠</div>
+                        <p>Waiting for anomalies...</p>
+                    </div>
+                </div>
+                <!-- Terminal (New Sub-Panel) -->
+                <div id="terminal-container" class="terminal-panel" style="display:none;">
+                    <div class="terminal-header">
+                        <span>Remote SSH Terminal</span>
+                        <span class="terminal-status">CONNECTED</span>
+                    </div>
+                    <div id="terminal-output" class="terminal-body mono"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

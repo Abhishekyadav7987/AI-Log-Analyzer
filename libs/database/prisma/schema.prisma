@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  FAILED
+}
+
+model Log {
+  id          String   @id @default(uuid())
+  source      String
+  serviceName String
+  host        String?
+  level       String
+  message     String
+  metadata    Json?
+  timestamp   DateTime @default(now())
+  ingestedAt  DateTime @default(now())
+  tickets     Ticket[]
+  @@index([serviceName, ingestedAt])
+  @@index([level, ingestedAt])
+}
+
+model Ticket {
+  id               String             @id @default(uuid())
+  title            String
+  status           TicketStatus       @default(OPEN)
+  severity         String
+  anomalyType      String
+  details          Json
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  logId            String?
+  log              Log?               @relation(fields: [logId], references: [id])
+  resolution       Resolution?
+  executionHistory ExecutionHistory[]
+  @@index([status, createdAt])
+  @@index([severity, createdAt])
+}
+
+model Resolution {
+  id          String   @id @default(uuid())
+  ticketId    String   @unique
+  ticket      Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  cause       String
+  fix         String
+  commands    Json
+  confidence  Float
+  model       String
+  generatedAt DateTime @default(now())
+}
+
+model ExecutionHistory {
+  id         String   @id @default(uuid())
+  ticketId   String
+  ticket     Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  command    String
+  status     String
+  output     String?
+  executedBy String
+  executedAt DateTime @default(now())
+  host       String
+  @@index([ticketId, executedAt])
+}
